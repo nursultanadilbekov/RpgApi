@@ -1,0 +1,26 @@
+# Скомпилированный код
+[Bb]in/
+[Oo]bj/
+
+# Пользовательские настройки Visual Studio
+*.user
+*.userosscache
+*.sln.docstates
+
+# Локальные настройки приложения
+appsettings.Development.json
+
+# Кэш инструментов и IDE
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Логи
+*.log
+
+# Папка публикации
+[Pp]ublish/
