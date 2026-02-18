@@ -22,7 +22,7 @@ namespace RPGApi.Controllers
             return Ok(characters);
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult<Character>> Create(Character character)
         {
             _context.Characters.Add(character);
