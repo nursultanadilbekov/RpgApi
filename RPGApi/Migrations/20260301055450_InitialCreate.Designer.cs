@@ -11,8 +11,8 @@ using RPGApi.Data;
 namespace RPGApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20260220090822_AddUser")]
-    partial class AddUser
+    [Migration("20260301055450_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,12 @@ namespace RPGApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CritChance")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CurrentHp")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Defence")
                         .HasColumnType("integer");
 
@@ -44,6 +50,9 @@ namespace RPGApi.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("integer");
 
+                    b.Property<int>("MaxHp")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -51,9 +60,37 @@ namespace RPGApi.Migrations
                     b.Property<int>("Strength")
                         .HasColumnType("integer");
 
+                    b.Property<int>("XP")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Characters");
+                });
+
+            modelBuilder.Entity("RPGApi.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

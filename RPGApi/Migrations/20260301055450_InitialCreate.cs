@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace RPGApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCharacter : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,11 +22,30 @@ namespace RPGApi.Migrations
                     Strength = table.Column<int>(type: "integer", nullable: false),
                     Defence = table.Column<int>(type: "integer", nullable: false),
                     Intelligence = table.Column<int>(type: "integer", nullable: false),
-                    Hitpoints = table.Column<int>(type: "integer", nullable: false)
+                    Hitpoints = table.Column<int>(type: "integer", nullable: false),
+                    MaxHp = table.Column<int>(type: "integer", nullable: false),
+                    CurrentHp = table.Column<int>(type: "integer", nullable: false),
+                    XP = table.Column<int>(type: "integer", nullable: false),
+                    CritChance = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Characters", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Username = table.Column<string>(type: "text", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "bytea", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
         }
 
@@ -35,6 +54,9 @@ namespace RPGApi.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Characters");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }
