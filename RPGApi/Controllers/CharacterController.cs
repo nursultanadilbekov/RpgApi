@@ -6,36 +6,30 @@ using RPGApi.Models;
 
 namespace RPGApi.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok("You are authorized!");
-        }
-        private readonly DataContext _context;
-        public CharacterController(DataContext context) 
-        {
-            _context = context;
-        }
+        private readonly ICharacterService _characterService;
 
-        [HttpGet]
-        public async Task<ActionResult<List<Character>>> GetAll()
+        public CharacterController(ICharacterService characterService)
         {
-            var characters = await _context.Characters.ToListAsync();
-            return Ok(characters);
+            _characterService = characterService;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Character>> Create(Character character)
+        public async Task<IActionResult> AddCharacter(AddCharacterDto request)
         {
-            _context.Characters.Add(character);
-            await _context.SaveChangesAsync();
+            var response = await _characterService.AddCharacter(request);
+            return Ok(response);
+        }
 
-            return Ok(character);
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var response = await _characterService.GetAllCharacters();
+            return Ok(response);
         }
     }
+
 }
